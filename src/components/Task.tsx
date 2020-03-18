@@ -1,20 +1,56 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { TaskType } from "../types";
+import { TaskType, SubtaskType } from "../types";
 import Subtask from "./Subtask";
 import colors from "../colors";
+import Database from "../api/database";
+import userID from "../api/userID";
 
-type Props = TaskType;
+type Props = { id: string; title: string };
 
-function Task({ title, subtasks }: Props) {
+function Task({ id, title }: Props) {
+  const [subtasks, setSubtasks] = useState<SubtaskType[]>([]);
+
+  useEffect(() => {
+    const unsubscribe = Database.startSubtaskSubscription(
+      id,
+      userID,
+      snapshot => {
+        const subtasks: SubtaskType[] = [];
+        snapshot.forEach((doc: any) => {
+          const data = doc.data();
+          console.log(data);
+          subtasks.push({
+            id: doc.id,
+            title: data.title,
+            workload: data.workload,
+            description: data.description,
+            dueDate: data.dueDate.toDate(),
+            status: data.status,
+            subtasks: []
+          });
+        });
+        setSubtasks(subtasks);
+      }
+    );
+    return unsubscribe;
+  }, []);
+
+  if (subtasks != null) {
+    return (
+      <View style={styles.task}>
+        <Text style={styles.title}>{title}</Text>
+        <View>
+          {subtasks.map(subtask => (
+            <Subtask key={subtask.id} {...subtask} />
+          ))}
+        </View>
+      </View>
+    );
+  }
   return (
     <View style={styles.task}>
       <Text style={styles.title}>{title}</Text>
-      <View>
-        {subtasks.map(subtask => (
-          <Subtask key={subtask.id} {...subtask} />
-        ))}
-      </View>
     </View>
   );
 }

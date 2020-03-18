@@ -2,14 +2,22 @@ import React, { useState } from "react";
 import { StyleSheet, View, TextInput } from "react-native";
 import colors from "../colors";
 import Button from "./Button";
+import Database from "../api/database";
 
-function AddTask() {
-  const [newTaskTitle, setNewTaskTitle] = useState<string>("");
+type Props = { userID: string };
+
+function AddTask({ userID }: Props) {
+  const [newTaskTitle, setNewTaskTitle] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   function handlePress() {
-    alert(newTaskTitle);
+    setIsSubmitting(true);
+    Database.addNewTask(userID, newTaskTitle).then(() => {
+      setIsSubmitting(false);
+    });
   }
 
-  const isDisabled = newTaskTitle === "";
+  const isDisabled = newTaskTitle === "" || isSubmitting;
 
   return (
     <View style={styles.task}>

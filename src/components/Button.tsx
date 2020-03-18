@@ -8,7 +8,7 @@ function Button({ title, onPress, disabled }: Props) {
   return (
     <TouchableOpacity
       disabled={disabled}
-      style={styles.button}
+      style={[styles.button, disabled && styles.disabled]}
       onPress={onPress}
     >
       <Text style={styles.title}>{title}</Text>
@@ -24,9 +24,11 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: colors.primary,
-    color: colors.primary,
     borderRadius: 10,
     padding: 8
+  },
+  disabled: {
+    backgroundColor: colors.disabled
   }
 });
 
