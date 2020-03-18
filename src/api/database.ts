@@ -31,6 +31,14 @@ class Database {
       });
   }
 
+  removeTask(userID: string, id: string) {
+    return this.database!.collection("users")
+      .doc(userID)
+      .collection("tasks")
+      .doc(id)
+      .delete();
+  }
+
   startTaskSubscription(
     userID: string,
     callback: (

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, Picker } from "react-native";
 import { TaskType, SubtaskType } from "../types";
 import Subtask from "./Subtask";
 import colors from "../colors";
@@ -45,6 +45,7 @@ function Task({ id, title }: Props) {
             <Subtask key={subtask.id} {...subtask} />
           ))}
         </View>
+        <Picker />
       </View>
     );
   }
@@ -62,7 +63,8 @@ const styles = StyleSheet.create({
     marginRight: 20,
     padding: 16,
     minHeight: 300,
-    borderRadius: 10
+    borderRadius: 10,
+    flex: 1
   },
   title: {
     color: colors.textColor,

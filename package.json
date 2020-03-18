@@ -8,6 +8,8 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@types/base-64": "^0.1.3",
+    "base-64": "^0.1.0",
     "date-fns": "^2.11.0",
     "expo": "~36.0.0",
     "firebase": "^7.11.0",

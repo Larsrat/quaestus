@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View, ScrollView } from "react-native";
 import Task from "./components/Task";
 import { TaskType } from "./types";
 import colors from "./colors";
@@ -29,10 +29,12 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <AddTask userID={userID} />
-      {tasks.map(task => (
-        <Task id={task.id} title={task.title} key={task.id} />
-      ))}
+      <ScrollView horizontal pagingEnabled>
+        <AddTask userID={userID} />
+        {tasks.map(task => (
+          <Task id={task.id} title={task.title} key={task.id} />
+        ))}
+      </ScrollView>
     </View>
   );
 }
