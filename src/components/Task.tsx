@@ -40,9 +40,9 @@ function Task({ id, title }: Props) {
   }, []);
 
   function performAction() {
-    if (option == 1) {
+    if (option == 2) {
       Database.removeTask(userID, id);
-    } else if (option === 2) {
+    } else if (option == 1) {
       /*insert code for adding subtask*/
       1+1;
     };
@@ -52,7 +52,7 @@ function Task({ id, title }: Props) {
     return (
       <View style={styles.task}>
         <Text style={styles.title}>{title}</Text>
-        <Picker style={styles.picker}>
+        <Picker style={styles.picker} onValueChange={(itemValue)=>setOption(itemValue)}>
           <Picker.Item label="Add Subtask" value={1}/>
           <Picker.Item label="Remove Task" value={2}/>
         </Picker>
@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
     marginBottom: 20
   },
   picker: {
-    marginBottom: 10,
+    marginBottom: 15,
     marginTop: 5,
   },
 });

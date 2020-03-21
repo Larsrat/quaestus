@@ -25,7 +25,8 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: colors.primary,
     borderRadius: 10,
-    padding: 8
+    padding: 8,
+    marginBottom: 15,
   },
   disabled: {
     backgroundColor: colors.disabled
