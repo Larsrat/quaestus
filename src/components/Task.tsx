@@ -5,11 +5,14 @@ import Subtask from "./Subtask";
 import colors from "../colors";
 import Database from "../api/database";
 import userID from "../api/userID";
+import Button from "./Button";
 
 type Props = { id: string; title: string };
 
 function Task({ id, title }: Props) {
   const [subtasks, setSubtasks] = useState<SubtaskType[]>([]);
+  const [option, setOption] = useState(1);
+
 
   useEffect(() => {
     const unsubscribe = Database.startSubtaskSubscription(
@@ -36,16 +39,29 @@ function Task({ id, title }: Props) {
     return unsubscribe;
   }, []);
 
+  function performAction() {
+    if (option == 1) {
+      Database.removeTask(userID, id);
+    } else if (option === 2) {
+      /*insert code for adding subtask*/
+      1+1;
+    };
+  };
+
   if (subtasks != null) {
     return (
       <View style={styles.task}>
         <Text style={styles.title}>{title}</Text>
+        <Picker style={styles.picker}>
+          <Picker.Item label="Add Subtask" value={1}/>
+          <Picker.Item label="Remove Task" value={2}/>
+        </Picker>
+        <Button title="Ok" onPress={performAction} disabled = {false}/>
         <View>
           {subtasks.map(subtask => (
             <Subtask key={subtask.id} {...subtask} />
           ))}
         </View>
-        <Picker />
       </View>
     );
   }
@@ -70,7 +86,11 @@ const styles = StyleSheet.create({
     color: colors.textColor,
     fontSize: 24,
     marginBottom: 20
-  }
+  },
+  picker: {
+    marginBottom: 10,
+    marginTop: 5,
+  },
 });
 
 export default Task;
